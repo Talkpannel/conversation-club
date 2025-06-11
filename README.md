@@ -1,2 +1,388 @@
-# conversation-club
-conversation club – Your Voice, Your Confidence. Practice real English conversations, improve fluency, and speak like a pro. Anytime. Anywhere."
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversation Club by Talkpannel - Connect & Learn Languages!</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <style>
+        :root {
+            --primary-color: #6a82fb; /* Blue-violet */
+            --secondary-color: #fc5c7d; /* Pink-red */
+            --accent-color: #ffd700; /* Gold/Yellow for highlights */
+            --text-color: #333;
+            --light-text-color: #666;
+            --white: #ffffff;
+            --shadow-light: 0 8px 20px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
+            --border-radius: 12px; /* Slightly more rounded */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--text-color);
+            overflow: hidden; /* Hide any overflow from decorations */
+            position: relative; /* For decorative elements positioning */
+        }
+
+        .container {
+            background-color: var(--white);
+            padding: 45px; /* More padding */
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            width: 90%;
+            max-width: 450px; /* Slightly wider */
+            position: relative;
+            z-index: 2; /* Ensure container is above decorations */
+            animation: fadeInScale 0.8s ease-out forwards; /* Slower animation */
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif; /* Different font for heading */
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-weight: 700; /* Bolder heading */
+            font-size: 2.2em; /* Larger heading */
+            line-height: 1.2;
+        }
+
+        p {
+            color: var(--light-text-color);
+            margin-bottom: 25px;
+            font-size: 1.05em; /* Slightly larger text */
+            line-height: 1.7;
+        }
+
+        .introduction {
+            margin-bottom: 35px; /* Space below introduction */
+            color: var(--text-color);
+            font-size: 1.1em;
+            font-weight: 400;
+        }
+
+        .introduction strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .introduction span.highlight {
+            color: var(--secondary-color);
+            font-weight: 700;
+        }
+
+        #welcome-message {
+            font-size: 1.3em; /* Larger welcome text */
+            font-weight: 600; /* Bolder welcome text */
+            color: var(--text-color);
+            margin-top: 20px;
+            margin-bottom: 30px;
+            padding: 12px 15px;
+            background-color: #e6f7ff; /* Light blue background for message */
+            border-radius: 8px; /* Slightly more rounded */
+            border-left: 5px solid var(--primary-color); /* Accent border */
+            display: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Subtle shadow for message */
+        }
+
+        #user-name {
+            font-weight: 700; /* Even bolder user name */
+            color: var(--primary-color);
+        }
+
+        .g_id_signin {
+            margin-top: 30px; /* Adjust spacing for login button */
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Styling for the sign-out button */
+        #sign-out-button {
+            background-color: #dc3545; /* Red color for sign-out */
+            color: var(--white);
+            border: none;
+            padding: 14px 30px; /* Larger padding */
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1.1em; /* Larger font */
+            font-weight: 600;
+            margin-top: 25px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        #sign-out-button:hover {
+            background-color: #c82333;
+            transform: translateY(-3px); /* More pronounced lift */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* --- Decorative Elements (Optional but adds flair) --- */
+        .decoration-circle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.12); /* Slightly less opaque */
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(5px); /* Add blur for a softer look */
+            animation: float 15s ease-in-out infinite alternate; /* Slower, smoother float */
+            z-index: 1; /* Below the container */
+        }
+
+        .decoration-circle.large {
+            width: 300px; /* Larger */
+            height: 300px;
+            top: -80px; /* Further out */
+            left: -80px;
+            animation-duration: 18s;
+        }
+
+        .decoration-circle.medium {
+            width: 200px; /* Larger */
+            height: 200px;
+            bottom: -100px; /* Further out */
+            right: -100px;
+            animation-duration: 14s;
+            animation-delay: 2s;
+        }
+
+        .decoration-circle.small {
+            width: 100px; /* Larger */
+            height: 100px;
+            top: 65%;
+            left: 10%;
+            animation-duration: 10s;
+            opacity: 0.7;
+            animation-delay: 3s;
+        }
+
+        .decoration-square {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.08); /* Different shape */
+            transform: rotate(45deg); /* Diamond shape */
+            pointer-events: none;
+            filter: blur(3px);
+            animation: floatSquare 12s ease-in-out infinite alternate;
+            z-index: 1;
+        }
+
+        .decoration-square.top-right {
+            width: 120px;
+            height: 120px;
+            top: 20px;
+            right: 20px;
+            animation-duration: 11s;
+        }
+
+        .decoration-square.bottom-left {
+            width: 90px;
+            height: 90px;
+            bottom: 30px;
+            left: 30px;
+            animation-duration: 9s;
+            animation-delay: 1.5s;
+        }
+
+
+        /* Keyframe Animations */
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-30px) translateX(15px); } /* More pronounced float */
+            100% { transform: translateY(0px) translateX(0px); }
+        }
+
+        @keyframes floatSquare {
+            0% { transform: rotate(45deg) translateY(0px) translateX(0px); }
+            50% { transform: rotate(45deg) translateY(20px) translateX(-10px); }
+            100% { transform: rotate(45deg) translateY(0px) translateX(0px); }
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 35px 25px; /* Adjusted padding */
+                max-width: 95%; /* Take up more width on small screens */
+            }
+
+            h1 {
+                font-size: 1.8em; /* Slightly smaller heading */
+            }
+
+            .introduction {
+                font-size: 0.95em; /* Smaller intro text */
+            }
+
+            #welcome-message {
+                font-size: 1.1em; /* Smaller welcome text */
+            }
+
+            /* Scale down decorative elements for smaller screens */
+            .decoration-circle.large {
+                width: 200px;
+                height: 200px;
+                top: -60px;
+                left: -60px;
+            }
+            .decoration-circle.medium {
+                width: 130px;
+                height: 130px;
+                bottom: -80px;
+                right: -80px;
+            }
+            .decoration-circle.small {
+                width: 70px;
+                height: 70px;
+            }
+            .decoration-square.top-right {
+                width: 90px;
+                height: 90px;
+            }
+            .decoration-square.bottom-left {
+                width: 70px;
+                height: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="decoration-circle large"></div>
+    <div class="decoration-circle medium"></div>
+    <div class="decoration-circle small"></div>
+    <div class="decoration-square top-right"></div>
+    <div class="decoration-square bottom-left"></div>
+
+    <div class="container">
+        <h1>Welcome to Conversation Club!</h1>
+        <p class="introduction">
+            Ready to become a fluent speaker? <span class="highlight">Conversation Club by Talkpannel</span> is your free gateway to mastering any language. Connect with a vibrant community of native speakers and learners from around the globe.
+            <br><br>
+            Practice speaking naturally, learn new vocabulary in real-time, and **make new friends** who share your passion for languages. Whether you're a beginner or advanced, we provide the perfect space to grow.
+            <br><br>
+            It's all about **real conversations, real progress, and real connections.**
+        </p>
+
+        <p id="welcome-message" style="display: none;">
+            Namaste, <span id="user-name"></span>! Let's dive into conversations and boost your language skills!
+        </p>
+
+        <div id="g_id_onload"
+             data-client_id="YOUR_GOOGLE_CLIENT_ID"
+             data-context="signin"
+             data-ux_mode="popup"
+             data-callback="handleCredentialResponse"
+             data-auto_prompt="false">
+        </div>
+
+        <div class="g_id_signin"
+             data-type="standard"
+             data-shape="rectangular"
+             data-theme="outline"
+             data-text="signin_with"
+             data-size="large"
+             data-logo_alignment="left">
+        </div>
+
+        <button id="sign-out-button" style="display: none;">Sign Out</button>
+    </div>
+
+    <script type="module">
+        // --- Firebase Configuration and SDK Imports ---
+        // Your web app's Firebase configuration (COPY THIS EXACTLY FROM FIREBASE CONSOLE)
+        const firebaseConfig = {
+          apiKey: "YOUR_API_KEY",
+          authDomain: "YOUR_AUTH_DOMAIN",
+          projectId: "YOUR_PROJECT_ID",
+          storageBucket: "YOUR_STORAGE_BUCKET",
+          messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+          appId: "YOUR_APP_ID"
+        };
+
+        // Initialize Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"; // Adjust version if needed
+        const app = initializeApp(firebaseConfig);
+
+        // Import Firebase Auth functions
+        import { getAuth, GoogleAuthProvider, signInWithCredential, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js"; // Adjust version if needed
+        const auth = getAuth(app);
+
+        // --- Google Identity Services Callback ---
+        // This function is called by the Google Identity Services library when a user signs in
+        window.handleCredentialResponse = async (response) => {
+            console.log("Encoded JWT ID token: " + response.credential);
+
+            // Build Firebase credential with the Google ID token
+            const credential = GoogleAuthProvider.credential(response.credential);
+
+            try {
+                // Sign in with credential from the Google user using Firebase Auth
+                await signInWithCredential(auth, credential);
+                console.log("User signed in successfully with Firebase!");
+                // UI will automatically update via the onAuthStateChanged listener below
+            } catch (error) {
+                console.error("Error signing in with Firebase:", error);
+                // In a real app, you might show a user-friendly error message here
+            }
+        };
+
+        // --- UI Elements and Event Listeners ---
+        const googleSignInButtonContainer = document.querySelector('.g_id_signin');
+        const signOutButton = document.getElementById('sign-out-button');
+        const welcomeMessage = document.getElementById('welcome-message');
+        const userNameSpan = document.getElementById('user-name');
+        const mainIntroduction = document.querySelector('.introduction'); // Select the main intro paragraph
+
+        // Firebase Auth State Listener (updates UI when login/logout happens)
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in
+                console.log("User is signed in:", user.displayName, user.email);
+                googleSignInButtonContainer.style.display = 'none'; // Hide Google button
+                mainIntroduction.style.display = 'none';            // Hide main introduction
+                signOutButton.style.display = 'block';              // Show sign out button
+                welcomeMessage.style.display = 'block';             // Show welcome message
+                userNameSpan.textContent = user.displayName || user.email; // Display user's name
+                document.querySelector('h1').textContent = "Welcome to Conversation Club!"; // Change title if needed
+            } else {
+                // User is signed out
+                console.log("User is signed out.");
+                googleSignInButtonContainer.style.display = 'flex'; // Show Google button (flex for centering)
+                mainIntroduction.style.display = 'block';           // Show main introduction
+                signOutButton.style.display = 'none';               // Hide sign out button
+                welcomeMessage.style.display = 'none';              // Hide welcome message
+                userNameSpan.textContent = '';
+                document.querySelector('h1').textContent = "Welcome to Conversation Club!"; // Reset title
+            }
+        });
+
+        // Sign out button click handler
+        signOutButton.addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                console.log("User signed out successfully.");
+                // UI will automatically update via the onAuthStateChanged listener above
+            } catch (error) {
+                console.error("Error signing out:", error);
+            }
+        });
+    </script>
+</body>
+</html>
